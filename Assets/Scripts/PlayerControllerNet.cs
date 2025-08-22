@@ -49,7 +49,6 @@ public class PlayerControllerNet : NetworkBehaviour
 	private CharacterController _cc;
 	private GameObject _mainCamera;
 	private Animator _animator;
-	private NetworkAnimator _netAnimator;
 	#endregion
 
 	#region Camera_State
@@ -106,7 +105,6 @@ public class PlayerControllerNet : NetworkBehaviour
 		_input = GetComponent<StarterAssetsInputs>();
 		_playerInput = GetComponent<PlayerInput>();
 		_animator = GetComponent<Animator>();
-		_netAnimator = GetComponent<NetworkAnimator>();
 		if (_animator != null)
 		{
 			_animator.updateMode = AnimatorUpdateMode.Normal;
@@ -122,6 +120,10 @@ public class PlayerControllerNet : NetworkBehaviour
 	{
 		if (_input) _input.enabled = enable;
 		if (_playerInput) _playerInput.enabled = enable;
+        if(enable){
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 	}
 	#endregion
 
@@ -137,9 +139,9 @@ public class PlayerControllerNet : NetworkBehaviour
 		if (_input.jump) { _input.jump = false; _pendingJump = true; } // латчим до отправки
 
 		// желаемое направление в мировой системе из камеры
-		Vector3 camF = Vector3.ProjectOnPlane((_mainCamera ? _mainCamera.transform.forward : transform.forward), Vector3.up).normalized;
-		Vector3 camR = Vector3.ProjectOnPlane((_mainCamera ? _mainCamera.transform.right   : transform.right),   Vector3.up).normalized;
-		Vector3 wishDir = (camF * _smoothedMove.y + camR * _smoothedMove.x);
+		Vector3 camF = Vector3.ProjectOnPlane(_mainCamera ? _mainCamera.transform.forward : transform.forward, Vector3.up).normalized;
+		Vector3 camR = Vector3.ProjectOnPlane(_mainCamera ? _mainCamera.transform.right   : transform.right,   Vector3.up).normalized;
+		Vector3 wishDir = camF * _smoothedMove.y + camR * _smoothedMove.x;
 		if (wishDir.sqrMagnitude > 1e-6f) wishDir.Normalize();
 		float moveMag = Mathf.Clamp01(_smoothedMove.magnitude);
 
@@ -163,7 +165,7 @@ public class PlayerControllerNet : NetworkBehaviour
 
 		if (_input.look.sqrMagnitude >= _threshold)
 		{
-			bool mouse = (_playerInput?.currentControlScheme == "KeyboardMouse");
+			bool mouse = _playerInput?.currentControlScheme == "KeyboardMouse";
 			float mul = mouse ? 1f : Time.deltaTime;
 			_cinYaw   += _input.look.x * mul;
 			_cinPitch += _input.look.y * mul;
@@ -219,7 +221,7 @@ public class PlayerControllerNet : NetworkBehaviour
 		if (Grounded && _verticalVelocity < 0f) _verticalVelocity = -2f;
 
 		// скорость
-		float targetSpeed = (wishDir.sqrMagnitude > 1e-6f ? (sprint ? SprintSpeed : MoveSpeed) : 0f);
+		float targetSpeed = wishDir.sqrMagnitude > 1e-6f ? (sprint ? SprintSpeed : MoveSpeed) : 0f;
 		_speed = Mathf.Lerp(_speed, targetSpeed, dt * Mathf.Max(0.001f, SpeedChangeRate));
 
 		// поворот

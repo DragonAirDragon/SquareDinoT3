@@ -12,6 +12,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool sendMessage;
+		public bool spawnCube;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -19,6 +21,10 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+
+
+
+		
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -43,6 +49,15 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnSendMessage(InputValue value)
+		{
+			SendMessageInput(value.isPressed);
+		}
+		public void OnSpawnCube(InputValue value)
+		{
+			SpawnCubeInput(value.isPressed);
+		}
 #endif
 
 
@@ -66,6 +81,16 @@ namespace StarterAssets
 			sprint = newSprintState;
 		}
 
+		public void SpawnCubeInput(bool newSpawnCubeState)
+		{
+			spawnCube = newSpawnCubeState;
+		}
+
+		public void SendMessageInput(bool newSendMessageState)
+		{
+			sendMessage = newSendMessageState;
+		}
+
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
@@ -75,6 +100,7 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
+	
 	}
 	
 }
