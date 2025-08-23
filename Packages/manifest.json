@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
+    "com.cursor.unity-mcp": "file:D:/Unity/Projects/Unity-MCP-Roslyn-Cursor/unity-mcp-package",
+    "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
     "com.unity.cinemachine": "2.10.3",
     "com.unity.collab-proxy": "2.9.2",
     "com.unity.feature.development": "1.0.1",

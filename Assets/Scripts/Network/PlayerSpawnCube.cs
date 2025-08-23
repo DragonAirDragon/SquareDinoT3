@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerSpawnCube : NetworkBehaviour
 {
     [SerializeField] private GameObject cubePrefab;
-    private StarterAssetsInputs _input;
     [SerializeField] private float spawnDistance = 2f;
     [SerializeField] private float ttlSeconds = 15f; // время жизни (опц.)
-
+    private StarterAssetsInputs _input;
     void Awake()
     {
         _input = GetComponent<StarterAssetsInputs>();
@@ -32,6 +31,7 @@ public class PlayerSpawnCube : NetworkBehaviour
 
         var go = Instantiate(cubePrefab, pos, rot);    // cubePrefab = CubePhysics
         NetworkServer.Spawn(go);                       // у всех появится одновременно;
+        if (ttlSeconds > 0f) StartCoroutine(DestroyLater(go, ttlSeconds));
     }
 
     private System.Collections.IEnumerator DestroyLater(GameObject go, float t)

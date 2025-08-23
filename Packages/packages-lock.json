@@ -9,6 +9,14 @@
       },
       "hash": "38fecf55e4fd94ccfe58a92ed8ad1a529ba1694e"
     },
+    "com.cursor.unity-mcp": {
+      "version": "file:D:/Unity/Projects/Unity-MCP-Roslyn-Cursor/unity-mcp-package",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      }
+    },
     "com.unity.burst": {
       "version": "1.8.21",
       "depth": 1,
@@ -232,6 +240,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "177dbda557fd652ce7f5d1647a3621653e094373"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
