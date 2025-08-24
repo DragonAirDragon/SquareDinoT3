@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c7ca189b3c534d9e3ee321306f9bd, type: 3}
   m_Name: MovementConfig
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  sprintSpeed: 5.335
-  rotationSmoothTime: 0.12
-  speedChangeRate: 10
-  jumpHeight: 1.2
-  gravity: -15
-  jumpTimeout: 0.5
-  fallTimeout: 0.15
-  groundedOffset: -0.14
-  groundedRadius: 0.28
-  groundedLayers:
+  MoveSpeed: 2
+  SprintSpeed: 5.335
+  RotationSmoothTime: 0.12
+  SpeedChangeRate: 10
+  JumpHeight: 1.2
+  Gravity: -15
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
+  GroundedLayers:
     serializedVersion: 2
     m_Bits: 9

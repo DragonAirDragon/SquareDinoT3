@@ -9,14 +9,6 @@
       },
       "hash": "38fecf55e4fd94ccfe58a92ed8ad1a529ba1694e"
     },
-    "com.cursor.unity-mcp": {
-      "version": "file:D:/Unity/Projects/Unity-MCP-Roslyn-Cursor/unity-mcp-package",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "3.2.1"
-      }
-    },
     "com.unity.burst": {
       "version": "1.8.21",
       "depth": 1,

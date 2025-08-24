@@ -1,7 +1,11 @@
-public interface IPlayerNameService
+/// <summary>
+/// Service for managing player nickname.
+/// </summary>
+namespace SquareDinoT3.Services
 {
-	string GetLocalNick();
-	void SaveLocalNick(string nickname);
+	public interface IPlayerNameService
+	{
+		string GetLocalNick();
+		void SaveLocalNick(string nickname);
+	}
 }
-
-

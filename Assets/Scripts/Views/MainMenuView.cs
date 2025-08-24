@@ -2,38 +2,66 @@ using UnityEngine;
 using TMPro;
 using VContainer;
 
-public class MainMenuView : MonoBehaviour
+using SquareDinoT3.Network;
+
+namespace SquareDinoT3.Views
 {
-    [SerializeField] private TMP_InputField nickInput;
-    private MainMenuPresenter _presenter;
-
-    [Inject]
-    public void Construct(MainMenuPresenter presenter)
+    /// <summary>
+    /// View for main menu.
+    /// </summary>
+    public class MainMenuView : MonoBehaviour
     {
-        _presenter = presenter;
-    }
+        [SerializeField] private TMP_InputField nickInput;
+        private MainMenuPresenter _presenter;
+        private INetworkClientEvents _networkEvents;
 
-    void Start()
-    {
-        var def = _presenter.GetDefaultNickname();
-        nickInput.text = def;
-    }
+        [Inject]
+        public void Construct(MainMenuPresenter presenter, INetworkClientEvents networkEvents)
+        {
+            _presenter = presenter;
+            _networkEvents = networkEvents;
+            _networkEvents.ClientConnected += OnClientConnected;
+            _networkEvents.ClientDisconnected += OnClientDisconnected;
+        }
 
-    public void OnHost()
-    {
-        _presenter.Host(nickInput.text);
-        gameObject.SetActive(false);
-    }
+        private void Start()
+        {
+            var def = _presenter.GetDefaultNickname();
+            nickInput.text = def;
+        }
 
-    public void OnClient()
-    {
-        _presenter.Client(nickInput.text);
-        gameObject.SetActive(false);
-    }
+        private void OnDestroy()
+        {
+            if (_networkEvents != null)
+            {
+                _networkEvents.ClientConnected -= OnClientConnected;
+                _networkEvents.ClientDisconnected -= OnClientDisconnected;
+            }
+        }
 
-    public void OnServer()
-    {
-        _presenter.Server(nickInput.text);
-        gameObject.SetActive(false);
+        public void OnHost()
+        {
+            _presenter.Host(nickInput.text);
+        }
+
+        public void OnClient()
+        {
+            _presenter.Client(nickInput.text);
+        }
+
+        public void OnServer()
+        {
+            _presenter.Server(nickInput.text);
+        }
+
+        private void OnClientConnected()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void OnClientDisconnected()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

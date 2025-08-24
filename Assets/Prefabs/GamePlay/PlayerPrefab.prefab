@@ -333,8 +333,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  networkConfig: {fileID: 11400000, guid: 758c73b5d57942b468d82b1aa0dd9fde, type: 2}
-  inputConfig: {fileID: 11400000, guid: af0279b5728e9d84e89d3fafba4df739, type: 2}
 --- !u!114 &5263574146169619229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,8 +348,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  movement: {fileID: 11400000, guid: c990e85bc04ba1f488f7f405104a5b3c, type: 2}
-  grounded: 1
 --- !u!114 &6811655688423245620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,10 +363,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cinemachineTarget: {fileID: 7580775080457262770}
-  playerFollowCameraTag: PlayerFollowCamera
-  lockCursor: 1
-  inputConfig: {fileID: 11400000, guid: af0279b5728e9d84e89d3fafba4df739, type: 2}
+  _cinemachineTarget: {fileID: 7580775080457262770}
+  _playerFollowCameraTag: PlayerFollowCamera
+  _lockCursor: 1
 --- !u!114 &5144927200957452309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,7 +381,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  animator: {fileID: 7679058513837301832}
+  _animator: {fileID: 7679058513837301832}
 --- !u!114 &612181798293143648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,12 +397,12 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  pushLayers:
+  _pushLayers:
     serializedVersion: 2
     m_Bits: 8
-  canPush: 1
-  strength: 1.1
-  massAgnostic: 0
+  _canPush: 1
+  _strength: 1.1
+  _massAgnostic: 0
 --- !u!114 &750108209613180348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,8 +605,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  nameText: {fileID: 1659850716128785683}
-  billboardTo: {fileID: 0}
+  _nameText: {fileID: 1659850716128785683}
 --- !u!114 &7526026741717899059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,9 +636,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cubePrefab: {fileID: 2270220108693446303, guid: 9d9f47c0cc591054880fb6945b351714, type: 3}
-  spawnDistance: 2
-  ttlSeconds: 15
+  _cubePrefab: {fileID: 2270220108693446303, guid: 9d9f47c0cc591054880fb6945b351714, type: 3}
+  _spawnDistance: 2
+  _ttlSeconds: 15
 --- !u!1 &1357731230498086377
 GameObject:
   m_ObjectHideFlags: 0

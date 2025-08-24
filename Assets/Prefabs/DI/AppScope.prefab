@@ -51,5 +51,4 @@ MonoBehaviour:
   movementConfig: {fileID: 11400000, guid: c990e85bc04ba1f488f7f405104a5b3c, type: 2}
   networkConfig: {fileID: 11400000, guid: 758c73b5d57942b468d82b1aa0dd9fde, type: 2}
   inputConfig: {fileID: 11400000, guid: af0279b5728e9d84e89d3fafba4df739, type: 2}
-  networkManager: {fileID: 2650418839830742284, guid: 4104a9fb8dc625445a1bfd368c9152db, type: 3}
   mainMenuView: {fileID: 6154456226363976325, guid: 695d5574226724e42ae3dcb284beaeee, type: 3}

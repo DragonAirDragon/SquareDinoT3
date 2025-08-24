@@ -1,36 +1,42 @@
 using VContainer;
+using SquareDinoT3.Services;
 
-public sealed class MainMenuPresenter
+namespace SquareDinoT3.Views
 {
-	readonly ISessionService _session;
-	readonly IPlayerNameService _names;
-
-	[Inject]
-	public MainMenuPresenter(ISessionService session, IPlayerNameService names)
+	/// <summary>
+	/// Presenter for main menu.
+	/// </summary>
+	public sealed class MainMenuPresenter
 	{
-		_session = session;
-		_names = names;
-	}
+		private readonly ISessionService _session;
+		private readonly IPlayerNameService _names;
 
-	public string GetDefaultNickname() => _names.GetLocalNick();
+		[Inject]
+		public MainMenuPresenter(ISessionService session, IPlayerNameService names)
+		{
+			_session = session;
+			_names = names;
+		}
 
-	public void Host(string nickname)
-	{
-		_names.SaveLocalNick(nickname);
-		_session.StartHost();
-	}
+		public string GetDefaultNickname() => _names.GetLocalNick();
 
-	public void Client(string nickname)
-	{
-		_names.SaveLocalNick(nickname);
-		_session.StartClient();
-	}
+		public void Host(string nickname)
+		{
+			_names.SaveLocalNick(nickname);
+			_session.StartHost();
+		}
 
-	public void Server(string nickname)
-	{
-		_names.SaveLocalNick(nickname);
-		_session.StartServer();
+		public void Client(string nickname)
+		{
+			_names.SaveLocalNick(nickname);
+			_session.StartClient();
+		}
+
+		public void Server(string nickname)
+		{
+			_names.SaveLocalNick(nickname);
+			_session.StartServer();
+		}
 	}
 }
-
 

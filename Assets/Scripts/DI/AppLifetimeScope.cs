@@ -2,54 +2,57 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-/// <summary>
-/// Глобальный DI-скоуп приложения. Регистрирует конфиги и базовые сервисы.
-/// </summary>
-public sealed class AppLifetimeScope : LifetimeScope
+using SquareDinoT3.Configs;
+using SquareDinoT3.Network;
+using SquareDinoT3.Services;
+using SquareDinoT3.Views;
+
+namespace SquareDinoT3.DI
 {
-
-	[Header("Player Configs")]
-	[SerializeField] private MovementConfig movementConfig;
-	[SerializeField] private NetworkConfig networkConfig;
-	[SerializeField] private InputConfig inputConfig;
-	[SerializeField] private DiNetworkManager networkManager;
-
-    [Header("Prefabs")]
-    [SerializeField] private MainMenuView mainMenuView;
-	
- 
-	protected override void Configure(IContainerBuilder builder)
+	/// <summary>
+	/// Global DI scope for the application. Registers configs and base services.
+	/// </summary>
+	public sealed class AppLifetimeScope : LifetimeScope
 	{
-		// Конфиги как инстансы
-		if (movementConfig != null) builder.RegisterInstance(movementConfig);
-		if (networkConfig != null) builder.RegisterInstance(networkConfig);
-		if (inputConfig != null) builder.RegisterInstance(inputConfig);
-		
-		// NetworkManager из сцены (с его уже настроенными полями и spawnPrefabs)
-		if (networkManager != null)
-		{
-			builder.RegisterComponent(networkManager);
-			builder.Register<ISessionService, MirrorSessionService>(Lifetime.Singleton);
-		}
-		
-		builder.Register<IPlayerNameService, PlayerPrefsNameService>(Lifetime.Singleton);
-		// Presenters
-		builder.Register<MainMenuPresenter>(Lifetime.Singleton);
-		// Views
-		if (mainMenuView != null)
-			builder.RegisterComponentInNewPrefab(mainMenuView, Lifetime.Singleton).DontDestroyOnLoad();
-	}
- 
 
-    #region NetworkResolver
-	public static IObjectResolver Resolver { get; private set; }
-	protected override void Awake()
-    {
-        base.Awake();
-        Resolver = Container;
-        DontDestroyOnLoad(gameObject);
-    }
-	#endregion
+		[Header("Player Configs")]
+		[SerializeField] private MovementConfig movementConfig;
+		[SerializeField] private NetworkConfig networkConfig;
+		[SerializeField] private InputConfig inputConfig;
+
+		[Header("Prefabs")]
+		[SerializeField] private MainMenuView mainMenuView;
+		
+	
+		protected override void Configure(IContainerBuilder builder)
+		{
+			// Configs as instances
+			if (movementConfig != null) builder.RegisterInstance(movementConfig);
+			if (networkConfig != null) builder.RegisterInstance(networkConfig);
+			if (inputConfig != null) builder.RegisterInstance(inputConfig);
+			
+			// NetworkManager from the scene (with its already configured fields and spawnPrefabs)
+			builder.RegisterComponentInHierarchy<DiNetworkManager>();
+			builder.Register<INetworkClientEvents>(r => r.Resolve<DiNetworkManager>(), Lifetime.Singleton);
+			builder.Register<ISessionService, MirrorSessionService>(Lifetime.Singleton);
+			
+			// Player name service
+			builder.Register<IPlayerNameService, PlayerPrefsNameService>(Lifetime.Singleton);
+			
+			// Main menu presenter
+			builder.Register<MainMenuPresenter>(Lifetime.Singleton);
+
+			// Main menu view
+			if (mainMenuView != null)
+				builder.RegisterComponentInNewPrefab(mainMenuView, Lifetime.Singleton).DontDestroyOnLoad();
+
+			// Force spawn and resolve MainMenuView
+			builder.RegisterBuildCallback(resolver => resolver.Resolve<MainMenuView>());
+		}
+	
+
+
+	}
 }
 
 
