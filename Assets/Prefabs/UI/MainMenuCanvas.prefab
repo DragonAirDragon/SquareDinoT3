@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 3466384178117070544}
   - component: {fileID: 6184429349639292468}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 6906313164848112225}
   - component: {fileID: 266489249118372498}
   m_Layer: 5
-  m_Name: NickName InputField (TMP)
+  m_Name: NicknameInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 1958976713860600935}
   - component: {fileID: 3575101924263021479}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: 'TitleLabel '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 1121850595823345137}
   - component: {fileID: 7291994939127679825}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -917,7 +917,7 @@ GameObject:
   - component: {fileID: 4668551872200745315}
   - component: {fileID: 7673359104341888922}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

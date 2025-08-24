@@ -38,7 +38,7 @@ namespace SquareDinoT3.Network
         [ClientRpc]
         private void RpcHello(string who)
         {
-            Debug.Log($"Hello from {who}");
+            Debug.Log($"Привет от {who}");
         }
     }
 }

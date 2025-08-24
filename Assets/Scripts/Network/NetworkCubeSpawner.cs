@@ -31,7 +31,6 @@ namespace SquareDinoT3.Network
         [Command] 
         private void CmdSpawnCube()
         {
-            Debug.Log("CmdSpawnCube");
             Vector3 pos = transform.position + transform.forward * _spawnDistance + Vector3.up * 0.5f;
             Quaternion rot = Quaternion.LookRotation(transform.forward, Vector3.up);
             var go = Instantiate(_cubePrefab, pos, rot);

@@ -41,12 +41,12 @@ namespace SquareDinoT3.Network
 				{
 					var prefab = spawnPrefabs[i];
 					if (prefab == null) continue;
-					// Исключаем playerPrefab из DI-спавна, чтобы избежать конфликта с Mirror
+					// Exclude playerPrefab from DI-spawn to avoid conflicts with Mirror
 					if (playerPrefab != null && prefab == playerPrefab) continue;
 					if (!_diSpawnPrefabs.Contains(prefab))
 						_diSpawnPrefabs.Add(prefab);
 				}
-				// Очистка, чтобы Mirror не регистрировал эти префабы повторно
+				// Cleaning to avoid Mirror registering these prefabs again
 				spawnPrefabs.Clear();
 			}
 
@@ -56,6 +56,18 @@ namespace SquareDinoT3.Network
 		{
 			base.OnStartClient();
 			RegisterSpawnHandlers();
+			if (playerPrefab != null)
+			{
+				NetworkClient.UnregisterPrefab(playerPrefab);
+				NetworkClient.RegisterPrefab(
+					playerPrefab,
+					msg => _resolver != null
+						? _resolver.Instantiate(playerPrefab, msg.position, msg.rotation)
+						: Instantiate(playerPrefab, msg.position, msg.rotation),
+					go => { if (go) Destroy(go); }
+				);
+				_registeredPrefabs.Add(playerPrefab);
+			}
 		}
 
 		public override void OnClientConnect()
@@ -67,6 +79,24 @@ namespace SquareDinoT3.Network
 		public override void OnClientDisconnect()
 		{
 			base.OnClientDisconnect();
+			ClientDisconnected?.Invoke();
+		}
+		public override void OnStopClient()
+		{
+			base.OnStopClient();
+			ClientDisconnected?.Invoke();
+			// Correctly unregister to avoid leaks/duplicates on reconnect
+			foreach (var prefab in _registeredPrefabs)
+			{
+				if (prefab != null)
+					NetworkClient.UnregisterPrefab(prefab);
+			}
+			_registeredPrefabs.Clear();
+		}
+
+		public override void OnStopHost()
+		{
+			base.OnStopHost();
 			ClientDisconnected?.Invoke();
 		}
 
@@ -101,24 +131,7 @@ namespace SquareDinoT3.Network
 			}
 		}
 
-		public override void OnStopClient()
-		{
-			base.OnStopClient();
-			ClientDisconnected?.Invoke();
-			// Correctly unregister to avoid leaks/duplicates on reconnect
-			foreach (var prefab in _registeredPrefabs)
-			{
-				if (prefab != null)
-					NetworkClient.UnregisterPrefab(prefab);
-			}
-			_registeredPrefabs.Clear();
-		}
 
-		public override void OnStopHost()
-		{
-			base.OnStopHost();
-			ClientDisconnected?.Invoke();
-		}
 
 
 		public override void OnServerAddPlayer(NetworkConnectionToClient conn)

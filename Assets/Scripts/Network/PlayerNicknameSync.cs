@@ -15,6 +15,10 @@ namespace SquareDinoT3.Network
         [Header("UI")]
         [SerializeField] private TMP_Text _nameText;     
         
+        [Header("Target")]
+        [SerializeField] private Transform _headAnchor;
+        [SerializeField] [Min(0f)] private float _worldYOffset = 0.25f;
+        
         [SyncVar(hook = nameof(OnNameChanged))]
         private string playerName;
         
@@ -23,6 +27,10 @@ namespace SquareDinoT3.Network
         private IPlayerNameService _nameService;
         // Cached
         private Transform _cachedCam;
+        private Transform _cachedNameTransform;
+
+
+
         // Properties
         public string PlayerName => playerName;
 
@@ -30,6 +38,14 @@ namespace SquareDinoT3.Network
         public void Construct(IPlayerNameService nameService)
         {
             _nameService = nameService;
+        }
+
+        private void Awake()
+        {
+            if (_nameText != null)
+            {
+                _cachedNameTransform = _nameText.transform;
+            }
         }
 
         public override void OnStartLocalPlayer()
@@ -56,14 +72,23 @@ namespace SquareDinoT3.Network
 
         private void LateUpdate()
         {
-            if (_nameText == null) return;
+            if (_nameText == null && _cachedNameTransform == null) return;
+            if (_cachedNameTransform == null && _nameText != null)
+                _cachedNameTransform = _nameText.transform;
+            // follow head anchor by world position with Y offset (ignore head rotation)
+            if (_headAnchor != null && _cachedNameTransform != null)
+            {
+                Vector3 pos = _headAnchor.position;
+                pos.y += _worldYOffset;
+                _cachedNameTransform.position = pos;
+            }
             // cache camera transform to avoid Camera.main jitter
             if (_cachedCam == null)
             {
                 _cachedCam = Camera.main ? Camera.main.transform : null;
             }
-            if (_cachedCam != null)
-                _nameText.transform.rotation = Quaternion.LookRotation(_nameText.transform.position - _cachedCam.position);
+            if (_cachedCam != null && _cachedNameTransform != null)
+                _cachedNameTransform.rotation = Quaternion.LookRotation(_cachedNameTransform.position - _cachedCam.position);
         }
     }
 }
