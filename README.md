@@ -1,9 +1,4 @@
-<p align="center">
-  <video src="docs/demo.mp4" width="800" controls>
-    Your browser does not support the video tag.
-  </video>
-</p>
-
+https://github.com/user-attachments/assets/d673caf7-f6ac-404e-a8d3-4fcf81b86fed
 <h1 align="center">SquareDinoT3 — Mirror (Unity 2022.3)</h1>
 <p align="center">
   <a href="https://unity.com/">Unity 2022.3 LTS</a> · 
@@ -16,11 +11,12 @@
   <a href="#"><img src="https://img.shields.io/badge/Mirror-server_authority-success" /></a>
   <a href="#"><img src="https://img.shields.io/badge/DI-VContainer-blue" /></a>
 </p>
+
 ## Содержание
 - [Итог](#итог)
 - [Быстрый старт](#быстрый-старт)
 - [Управление](#управление)
-- [ТЗ → Реализация](#тз--реализация)
+- [ТЗ и реализация](#тз-и-реализация)
 - [Архитектура](#архитектура)
 - [Структура проекта](#структура-проекта)
 - [Сцены и префабы](#сцены-и-префабы)
@@ -44,7 +40,7 @@
 | Отправить сетевое сообщение "Привет от &lt;nick&gt;"| **T**        |
 | Заспавнить сетевой куб перед персонажем             | **F**        |
 
-## ТЗ → Реализация
+## ТЗ и реализация
 **Все обязательные задачи и дополнительные выполнены.**
 
 | Требование ТЗ                                                | Статус | Где в коде                                                                                                                                                          |
